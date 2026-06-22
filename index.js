@@ -11,18 +11,18 @@ weatherForm.addEventListener("submit", async event => {
     if (city) {
         try {
             const weatherData = await getWeatherData(city);
-            displayWeatherinfo(weatherData);
+            displayWeatherInfo(weatherData);
         } catch (error) {
             console.error(error);
             displayError(error.message);
         }
     } else {
-        displayError("Please Enter a City");
+        displayError("Please enter a city");
     }
 });
 
 async function getWeatherData(city) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     const response = await fetch(apiUrl);
 
@@ -33,7 +33,7 @@ async function getWeatherData(city) {
     return await response.json();
 }
 
-function displayWeatherinfo(data) {
+function displayWeatherInfo(data) {
     const {
         name: city,
         main: { temp, humidity },
@@ -49,7 +49,7 @@ function displayWeatherinfo(data) {
     card.appendChild(cityDisplay);
 
     const tempDisplay = document.createElement("p");
-    tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`;
+    tempDisplay.textContent = `${temp.toFixed(1)}°C`;
     tempDisplay.classList.add("tempDisplay");
     card.appendChild(tempDisplay);
 
